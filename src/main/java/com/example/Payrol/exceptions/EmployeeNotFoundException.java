@@ -1,8 +1,8 @@
-package com.example.Payrol;
+package com.example.Payrol.exceptions;
 
 public class EmployeeNotFoundException extends RuntimeException {
     
-    EmployeeNotFoundException(Long id){
+    public EmployeeNotFoundException(Long id){
         super("Cound not find employee " + id);
     }
 

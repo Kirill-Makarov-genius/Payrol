@@ -1,4 +1,4 @@
-package com.example.Payrol;
+package com.example.Payrol.entities;
 
 import java.util.Objects;
 
@@ -20,7 +20,7 @@ public class Employee {
 
     Employee(){}
 
-    Employee(String firstName, String lastName, String role){
+    public Employee(String firstName, String lastName, String role){
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;

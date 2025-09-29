@@ -1,4 +1,4 @@
-package com.example.Payrol;
+package com.example.Payrol.controllers;
 
 
 import java.util.List;
@@ -18,6 +18,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Payrol.EmployeeModelAssembler;
+import com.example.Payrol.entities.Employee;
+import com.example.Payrol.exceptions.EmployeeNotFoundException;
+import com.example.Payrol.repositories.EmployeeRepository;
+
 @RestController
 public class EmployeeController {
     
@@ -30,7 +35,7 @@ public class EmployeeController {
 
 
     @GetMapping("/employees")
-    CollectionModel<EntityModel<Employee>> all(){
+    public CollectionModel<EntityModel<Employee>> all(){
         List<EntityModel<Employee>> employees = repository.findAll().stream()
             .map(assembler::toModel)
             .collect(Collectors.toList());
@@ -39,7 +44,7 @@ public class EmployeeController {
 
     // ResponseEntity is a Full HTTP response with body, status and headers
     @PostMapping("/employees")
-    ResponseEntity<EntityModel<Employee>> newEmployee(@RequestBody Employee newEmployee){
+    public ResponseEntity<EntityModel<Employee>> newEmployee(@RequestBody Employee newEmployee){
         EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
         
     // enityModel.getRequiredLink return the link with the given relation, in out example is SELF link
@@ -52,7 +57,7 @@ public class EmployeeController {
 
 
     @GetMapping("/employees/{id}")
-    EntityModel<Employee> one(@PathVariable Long id){
+    public EntityModel<Employee> one(@PathVariable Long id){
         Employee employee = repository.findById(id)
             .orElseThrow(() -> new EmployeeNotFoundException(id));
         return assembler.toModel(employee);
@@ -60,7 +65,7 @@ public class EmployeeController {
     } 
 
     @PutMapping("/employees/{id}")
-    ResponseEntity<EntityModel<Employee>> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id){
+    public ResponseEntity<EntityModel<Employee>> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id){
         
 
         Employee updatedEmployee = repository.findById(id)
@@ -80,7 +85,7 @@ public class EmployeeController {
     
     // noContent() create a response with HTTP status 204 no content. Useful when API perform a request but doesn't need to return any data.
     @DeleteMapping("/employees/{id}")
-    ResponseEntity<EntityModel<Employee>> deleteEmployee(@PathVariable Long id){
+    public ResponseEntity<EntityModel<Employee>> deleteEmployee(@PathVariable Long id){
         repository.deleteById(id);
 
         return ResponseEntity.noContent().build();

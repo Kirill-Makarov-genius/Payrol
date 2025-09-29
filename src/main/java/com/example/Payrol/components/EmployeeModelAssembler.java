@@ -1,4 +1,4 @@
-package com.example.Payrol;
+package com.example.Payrol.components;
 
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -7,6 +7,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
+
+import com.example.Payrol.controllers.EmployeeController;
+import com.example.Payrol.entities.Employee;
 
 // A simple interfase has one method - toModel(). It it based on converting a non-model object(Employee)
 // into a model-based object(EntityModel<Employee>)
