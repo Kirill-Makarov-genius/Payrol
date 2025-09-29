@@ -39,7 +39,7 @@ public class EmployeeController {
 
     // ResponseEntity is a Full HTTP response with body, status and headers
     @PostMapping("/employees")
-    ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee){
+    ResponseEntity<EntityModel<Employee>> newEmployee(@RequestBody Employee newEmployee){
         EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
         
     // enityModel.getRequiredLink return the link with the given relation, in out example is SELF link
@@ -60,7 +60,7 @@ public class EmployeeController {
     } 
 
     @PutMapping("/employees/{id}")
-    ResponseEntity replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id){
+    ResponseEntity<EntityModel<Employee>> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id){
         
 
         Employee updatedEmployee = repository.findById(id)
@@ -72,15 +72,15 @@ public class EmployeeController {
             .orElseGet(() -> {
                 return repository.save(newEmployee);
             });
-        EntityModel entityModel = assembler.toModel(updatedEmployee);
+        EntityModel<Employee> entityModel = assembler.toModel(updatedEmployee);
 
         return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
             .body(entityModel);
     }
     
-    // noContent() create a response with HTTP status 204 no content. Useful when API perform a request but doesn't need to return any data
+    // noContent() create a response with HTTP status 204 no content. Useful when API perform a request but doesn't need to return any data.
     @DeleteMapping("/employees/{id}")
-    ResponseEntity deleteEmployee(@PathVariable Long id){
+    ResponseEntity<EntityModel<Employee>> deleteEmployee(@PathVariable Long id){
         repository.deleteById(id);
 
         return ResponseEntity.noContent().build();
