@@ -5,15 +5,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.example.Payrol.exceptions.EmployeeNotFoundException;
+import com.example.Payrol.exceptions.OrderNotFoundException;
 
 @RestControllerAdvice
-public class EmployeeNotFoundAdvice {
+public class OrderNotFoundAdvice {
     
 
-    @ExceptionHandler(EmployeeNotFoundException.class)
+    @ExceptionHandler(OrderNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String employeeNotFoundHandler(EmployeeNotFoundException ex){
+    public String OrderNotFoundHandler(OrderNotFoundException ex){
         return ex.getMessage();
     }
+
 }

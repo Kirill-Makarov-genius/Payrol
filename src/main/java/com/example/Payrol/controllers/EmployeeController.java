@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Payrol.EmployeeModelAssembler;
+import com.example.Payrol.components.EmployeeModelAssembler;
 import com.example.Payrol.entities.Employee;
 import com.example.Payrol.exceptions.EmployeeNotFoundException;
 import com.example.Payrol.repositories.EmployeeRepository;
