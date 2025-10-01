@@ -31,13 +31,13 @@ import com.example.Payrol.exceptions.OrderNotFoundException;
 import com.example.Payrol.repositories.OrderRepository;
 
 @RestController
-public class OrderContoller {
+public class OrderController {
 
     // Dependecy Injection of repository and assembler
     private final OrderRepository orderRepository;
     private final OrderModelAssembler assembler;
 
-    OrderContoller(OrderRepository orderRepository, OrderModelAssembler orderModelAssembler){
+    OrderController(OrderRepository orderRepository, OrderModelAssembler orderModelAssembler){
         this.orderRepository = orderRepository;
         this.assembler = orderModelAssembler;
     }
@@ -48,8 +48,8 @@ public class OrderContoller {
             .map(assembler::toModel)
             .collect(Collectors.toList()); 
 
-        return CollectionModel.of(orders, 
-        linkTo(methodOn(OrderContoller.class).all()).withSelfRel());
+        return CollectionModel.of(orders,
+                linkTo(methodOn(OrderController.class).all()).withSelfRel());
     }
 
     @GetMapping("/orders/{id}")
@@ -66,6 +66,8 @@ public class OrderContoller {
  
         order.setStatus(Status.IN_PROGRESS);
         EntityModel<Order> newOrder = assembler.toModel(orderRepository.save(order));
+
+
 
         return ResponseEntity
             .created(newOrder.getRequiredLink(IanaLinkRelations.SELF).toUri())
